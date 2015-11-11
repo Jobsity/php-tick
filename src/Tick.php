@@ -1,11 +1,10 @@
 <?php
-namespace Jobsity\PhpTick\Api;
+namespace Jobsity\PhpTick;
 
 use Jobsity\PhpTick\Http\APIClient;
 
 class TickspotAPI
 {
-
     private $client;
 
     /**
