@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "89c2f2417a61d3a1e08297a5edbd51eb",
-    "content-hash": "3329738ce84c3968f9ddf6f0f4ab9123",
+    "hash": "d4a5693326a2e7aa4ba94d519b967345",
+    "content-hash": "e5ff4e48f720684a446d3ed887fea4ea",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -179,6 +179,145 @@
             "time": "2015-11-03 01:34:55"
         },
         {
+            "name": "mefworks/log",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/leverton/mefworks-log.git",
+                "reference": "e6d1de1e3777cfa38164275fe924454b75521d7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/leverton/mefworks-log/get/e6d1de1e3777cfa38164275fe924454b75521d7c.zip",
+                "reference": "e6d1de1e3777cfa38164275fe924454b75521d7c",
+                "shasum": ""
+            },
+            "require": {
+                "mefworks/string-interpolation": "~1.0",
+                "php": ">=5.5",
+                "psr/log": "~1.0"
+            },
+            "provide": {
+                "psr/log-implementation": "1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "mef\\Log\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Leverton"
+                }
+            ],
+            "description": "PSR-3 compliant logger.",
+            "time": "2014-10-23 00:29:46"
+        },
+        {
+            "name": "mefworks/string-interpolation",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/leverton/mefworks-string-interpolation.git",
+                "reference": "d96a7569718aaaab5624ba5d2f666051c8c03bb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/leverton/mefworks-string-interpolation/get/d96a7569718aaaab5624ba5d2f666051c8c03bb1.zip",
+                "reference": "d96a7569718aaaab5624ba5d2f666051c8c03bb1",
+                "shasum": ""
+            },
+            "require": {
+                "mefworks/stringifier": "~1.0",
+                "php": ">=5.5",
+                "psr/log": "~1.0"
+            },
+            "provide": {
+                "psr/log-implementation": "1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.3.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "mef\\StringInterpolation\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Leverton"
+                }
+            ],
+            "description": "Interpolate strings by replacing placeholders with data from an array.",
+            "time": "2014-10-18 04:30:03"
+        },
+        {
+            "name": "mefworks/stringifier",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/leverton/mefworks-stringify.git",
+                "reference": "a4eca4f44da43e40789e389e993d0edbea71d57a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/leverton/mefworks-stringify/get/a4eca4f44da43e40789e389e993d0edbea71d57a.zip",
+                "reference": "a4eca4f44da43e40789e389e993d0edbea71d57a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "mef\\Stringifier\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Leverton"
+                }
+            ],
+            "description": "Convert any variable into a string.",
+            "time": "2014-10-17 23:24:55"
+        },
+        {
             "name": "psr/http-message",
             "version": "1.0",
             "source": {
@@ -226,6 +365,44 @@
                 "response"
             ],
             "time": "2015-05-04 20:22:00"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Psr\\Log\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2012-12-21 11:40:51"
         }
     ],
     "packages-dev": [
