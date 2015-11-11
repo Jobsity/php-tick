@@ -11,31 +11,37 @@ interface ClientInterface
     /**
      * Get Request
      *
-     * @param string   $endpoint      Final endpoint
-     * @param array    $queryParams   Parameters for quering
+     * @param string    $endpoint      Final endpoint
+     * @param array     $queryParams   Parameters for quering
      *
      * @return mixed
      */
     public function get($endpoint, array $queryParams);
 
     /**
-     * @param $endpoint
-     * @param $data
+     * Post Request
+     *
+     * @param string    $endpoint   Final endpoint
+     * @param array     $data       Data to insert
      *
      * @return mixed
      */
-    public function post($endpoint, $data);
+    public function post($endpoint, array $data);
 
     /**
-     * @param $endpoint
-     * @param $data
+     * Put Request
+     *
+     * @param string    $endpoint   Final endpoint
+     * @param array     $data       Data to update
      *
      * @return mixed
      */
-    public function put($endpoint, $data);
+    public function put($endpoint, array $data);
 
     /**
-     * @param $endpoint
+     * Delete Request
+     *
+     * @param string    $endpoint   Final endpoint
      *
      * @return mixed
      */

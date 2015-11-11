@@ -3,6 +3,9 @@ namespace Jobsity\PhpTick\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
+use mef\Log\StandardLogger;
 
 /**
  * Class ApiClient
@@ -17,12 +20,12 @@ class ApiClient implements ClientInterface
     /**
      * @var string User’s subscription id
      */
-    private $subscription_id;
+    private $subscriptionId;
 
     /**
      * @var string User's access token
      */
-    private $access_token;
+    private $accessToken;
 
     /**
      * @var string User's company
@@ -37,7 +40,7 @@ class ApiClient implements ClientInterface
     /**
     * @var string API url
     */
-    private $api_url;
+    private $apiUrl;
 
     /**
      * @var Client Guzzle Client Handler
@@ -47,127 +50,140 @@ class ApiClient implements ClientInterface
     /**
      * Constructor
      *
-     * @param string   $subscription_id   Subscription id of the user.
-     * @param string   $access_token      Access token of the user.
-     * @param string   $company           User's company.
-     * @param string   $email             User's email.
+     * @param string   $subscriptionId   Subscription id of the user.
+     * @param string   $accessToken      Access token of the user.
+     * @param string   $company          User's company.
+     * @param string   $email            User's email.
      */
-    public function __construct($subscription_id, $access_token, $company, $email)
+    public function __construct($subscriptionId, $accessToken, $company, $email)
     {
-        $this->subscription_id = (string)$subscription_id;
-        $this->access_token = (string)$access_token;
+        $this->subscriptionId = (string)$subscriptionId;
+        $this->accessToken = (string)$accessToken;
         $this->company = (string)$company;
         $this->email = (string)$email;
 
-        $this->api_url = self::BASE_URL . $this->subscription_id . self::ENDPOINT_URL;
+        $this->apiUrl = self::BASE_URL . $this->subscriptionId . self::ENDPOINT_URL;
 
-        $this->client = new Client();
+        $this->client = new Client(['headers' =>
+            ['User-Agent' => $this->company . "(" . $this->email . ")",
+                'Authorization' => "Token token=" . $this->accessToken]
+        ]);
+
+        $this->logger = new StandardLogger();
     }
 
     /**
-     * Get Request
-     *
-     * @param string $endpoint      Final endpoint
-     * @param array $queryParams   Parameters for quering
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function get($endpoint, $queryParams)
+    public function get($endpoint, array $queryParams)
     {
         try {
-            $request = $this->client->request('GET', $this->api_url . $endpoint .'.json',
-                ['headers' =>
-                    ['User-Agent' => $this->company."(".$this->email.")",
-                    'Authorization' => "Token token=" . $this->access_token],
-                'query' => $queryParams
-                ]);
+            $request = $this->client->request('GET', $this->apiUrl . $endpoint . '.json',
+                array('query' => $queryParams));
 
-            echo $request->getBody();
-        }
-        catch (ClientException $e) {
-            echo $e->getResponse()->getStatusCode();
-            echo $e->getResponse()->getReasonPhrase();
+            return json_decode((string)$request->getBody());
+        } catch (ClientException $e) {
+            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+        } catch (ServerException $e) {
+            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                    'message' => $e->getMessage()]);
+            } else
+                return $this->logger->error($e->getMessage());
+        } catch (\Exception $e) {
+            return $this->logger->error($e->getMessage());
         }
     }
 
     /**
-     * Post Request
-     *
-     * @param string $endpoint  Final endpoint
-     * @param array $data       Data to insert
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function post($endpoint, $data)
+    public function post($endpoint, array $data)
     {
         try {
-            $request = $this->client->request('POST', $this->api_url . $endpoint . '.json',
+            $request = $this->client->request('POST', $this->apiUrl . $endpoint . '.json',
                 array('headers' => array(
-                    'User-Agent' => $this->company . "(" . $this->email . ")",
-                    'Authorization' => "Token token=" . $this->access_token,
                     'Content-Type' => 'application/json; charset=utf-8'
                 ),
                     'json' => $data
                 ));
 
-            echo $request->getStatusCode();
-        }
-        catch (ClientException $e) {
-            echo $e->getResponse()->getStatusCode();
-            echo $e->getResponse()->getReasonPhrase();
+            return (string)$request->getBody();
+        } catch (ClientException $e) {
+            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+        } catch (ServerException $e) {
+            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                    'message' => $e->getMessage()]);
+            } else
+                return $this->logger->error($e->getMessage());
+        } catch (\Exception $e) {
+            return $this->logger->error($e->getMessage());
         }
     }
 
     /**
-     * Put Request
-     *
-     * @param string $endpoint  Final endpoint
-     * @param array $data       Data to update
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function put($endpoint, $data)
+    public function put($endpoint, array $data)
     {
         try {
-            $request = $this->client->request('PUT', $this->api_url . $endpoint . '.json',
+            $request = $this->client->request('PUT', $this->apiUrl . $endpoint . '.json',
                 array('headers' => array(
-                    'User-Agent' => $this->company . "(" . $this->email . ")",
-                    'Authorization' => "Token token=" . $this->access_token,
                     'Content-Type' => 'application/json; charset=utf-8'
                 ),
                     'json' => $data
                 ));
 
-            echo $request->getStatusCode();
-        }
-        catch (ClientException $e) {
-            echo $e->getResponse()->getStatusCode();
-            echo $e->getResponse()->getReasonPhrase();
+            return $request->getStatusCode();
+        } catch (ClientException $e) {
+            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+        } catch (ServerException $e) {
+            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                    'message' => $e->getMessage()]);
+            } else
+                return $this->logger->error($e->getMessage());
+        } catch (\Exception $e) {
+            return $this->logger->error($e->getMessage());
         }
     }
 
     /**
-     * Delete Request
-     *
-     * @param string $endpoint  Final endpoint
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function delete($endpoint)
     {
         try {
-            $request = $this->client->request('DELETE', $this->api_url . $endpoint . '.json',
-                array('headers' => array(
-                        'User-Agent' => $this->company . "(" . $this->email . ")",
-                        'Authorization' => "Token token=" . $this->access_token
-                    )
-                ));
+            $request = $this->client->request('DELETE', $this->apiUrl . $endpoint . '.json', array());
 
-            echo $request->getStatusCode();
-        }
-        catch (ClientException $e) {
-            echo $e->getResponse()->getStatusCode();
-            echo $e->getResponse()->getReasonPhrase();
+            return $request->getStatusCode();
+        } catch (ClientException $e) {
+            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+        } catch (ServerException $e) {
+            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                    'message' => $e->getMessage()]);
+            } else
+                return $this->logger->error($e->getMessage());
+        } catch (\Exception $e) {
+            return $this->logger->error($e->getMessage());
         }
     }
 }
