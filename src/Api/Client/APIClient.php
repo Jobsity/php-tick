@@ -1,26 +1,47 @@
 <?php
-
 namespace Jobsity\PhpTick\Api\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
+/**
+ * Class APIClient
+ *
+ * @package Jobsity\PhpTick\Api\Client
+ */
 class APIClient implements ClientInterface
 {
     const BASE_URL = 'https://www.tickspot.com/';
     const ENDPOINT_URL = '/api/v2/';
 
-    /* config access data */
+    /**
+     * @var string User’s subscription id
+     */
     private $subscription_id;
+
+    /**
+     * @var string User’s access token
+     */
     private $access_token;
 
-    /* config data fo User Agent */
+    /**
+     * @var string User’s company
+     */
     private $company;
+
+    /**
+     * @var string User’s email
+     */
     private $email;
 
-    /* The API base url */
-    protected $api_url;
+    /**
+    * @var string API url
+    */
+    private $api_url;
 
+    /**
+     * @var Client Guzzle Client Handler
+     */
     private $client;
 
     /**
@@ -38,16 +59,23 @@ class APIClient implements ClientInterface
         $this->company = (string)$company;
         $this->email = (string)$email;
 
-        /* generate the api url */
-        $this->apiUrl = self::BASE_URL . $this->subscription_id . self::ENDPOINT_URL;
+        $this->api_url = self::BASE_URL . $this->subscription_id . self::ENDPOINT_URL;
 
         $this->client = new Client();
     }
 
+    /**
+     * Get Request
+     *
+     * @param string $endpoint      Final endpoint
+     * @param array $query_params   Parameters for quering
+     *
+     * @return mixed
+     */
     public function get($endpoint, $query_params)
     {
         try {
-            $request = $this->client->request('GET', $this->apiUrl . $endpoint .'.json',
+            $request = $this->client->request('GET', $this->api_url . $endpoint .'.json',
                 ['headers' =>
                     ['User-Agent' => $this->company."(".$this->email.")",
                     'Authorization' => "Token token=" . $this->access_token],
@@ -62,10 +90,18 @@ class APIClient implements ClientInterface
         }
     }
 
+    /**
+     * Post Request
+     *
+     * @param string $endpoint  Final endpoint
+     * @param array $data       Data to insert
+     *
+     * @return mixed
+     */
     public function post($endpoint, $data)
     {
         try {
-            $request = $this->client->request('POST', $this->apiUrl . $endpoint . '.json',
+            $request = $this->client->request('POST', $this->api_url . $endpoint . '.json',
                 array('headers' => array(
                     'User-Agent' => $this->company . "(" . $this->email . ")",
                     'Authorization' => "Token token=" . $this->access_token,
@@ -82,10 +118,18 @@ class APIClient implements ClientInterface
         }
     }
 
+    /**
+     * Put Request
+     *
+     * @param string $endpoint  Final endpoint
+     * @param array $data       Data to update
+     *
+     * @return mixed
+     */
     public function put($endpoint, $data)
     {
         try {
-            $request = $this->client->request('PUT', $this->apiUrl . $endpoint . '.json',
+            $request = $this->client->request('PUT', $this->api_url . $endpoint . '.json',
                 array('headers' => array(
                     'User-Agent' => $this->company . "(" . $this->email . ")",
                     'Authorization' => "Token token=" . $this->access_token,
@@ -102,10 +146,17 @@ class APIClient implements ClientInterface
         }
     }
 
+    /**
+     * Delete Request
+     *
+     * @param string $endpoint  Final endpoint
+     *
+     * @return mixed
+     */
     public function delete($endpoint)
     {
         try {
-            $request = $this->client->request('DELETE', $this->apiUrl . $endpoint . '.json',
+            $request = $this->client->request('DELETE', $this->api_url . $endpoint . '.json',
                 array('headers' => array(
                         'User-Agent' => $this->company . "(" . $this->email . ")",
                         'Authorization' => "Token token=" . $this->access_token
