@@ -1,5 +1,5 @@
 <?php
-namespace Jobsity\PhpTick\Api\Client;
+namespace Jobsity\PhpTick\Http;
 
 /**
  * Interface ClientInterface
@@ -10,11 +10,11 @@ interface ClientInterface
 {
     /**
      * @param $endpoint
-     * @param $query_params
+     * @param $queryParams
      *
      * @return mixed
      */
-    public function get($endpoint, $query_params);
+    public function get($endpoint, $queryParams);
 
     /**
      * @param $endpoint

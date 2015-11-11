@@ -1,5 +1,5 @@
 <?php
-namespace Jobsity\PhpTick\Api\Client;
+namespace Jobsity\PhpTick\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -68,18 +68,18 @@ class APIClient implements ClientInterface
      * Get Request
      *
      * @param string $endpoint      Final endpoint
-     * @param array $query_params   Parameters for quering
+     * @param array $queryParams   Parameters for quering
      *
      * @return mixed
      */
-    public function get($endpoint, $query_params)
+    public function get($endpoint, $queryParams)
     {
         try {
             $request = $this->client->request('GET', $this->api_url . $endpoint .'.json',
                 ['headers' =>
                     ['User-Agent' => $this->company."(".$this->email.")",
                     'Authorization' => "Token token=" . $this->access_token],
-                'query' => $query_params
+                'query' => $queryParams
                 ]);
 
             echo $request->getBody();
