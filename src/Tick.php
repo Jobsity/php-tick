@@ -3,7 +3,7 @@ namespace Jobsity\PhpTick;
 
 use Jobsity\PhpTick\Http\APIClient;
 
-class TickspotAPI
+class Tick
 {
     private $client;
 
