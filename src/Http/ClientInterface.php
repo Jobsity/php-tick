@@ -9,12 +9,14 @@ namespace Jobsity\PhpTick\Http;
 interface ClientInterface
 {
     /**
-     * @param $endpoint
-     * @param $queryParams
+     * Get Request
+     *
+     * @param string   $endpoint      Final endpoint
+     * @param array    $queryParams   Parameters for quering
      *
      * @return mixed
      */
-    public function get($endpoint, $queryParams);
+    public function get($endpoint, array $queryParams);
 
     /**
      * @param $endpoint

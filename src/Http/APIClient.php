@@ -5,11 +5,11 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
 /**
- * Class APIClient
+ * Class ApiClient
  *
- * @package Jobsity\PhpTick\Api\Client
+ * @package Jobsity\PhpTick
  */
-class APIClient implements ClientInterface
+class ApiClient implements ClientInterface
 {
     const BASE_URL = 'https://www.tickspot.com/';
     const ENDPOINT_URL = '/api/v2/';
@@ -20,17 +20,17 @@ class APIClient implements ClientInterface
     private $subscription_id;
 
     /**
-     * @var string User’s access token
+     * @var string User's access token
      */
     private $access_token;
 
     /**
-     * @var string User’s company
+     * @var string User's company
      */
     private $company;
 
     /**
-     * @var string User’s email
+     * @var string User's email
      */
     private $email;
 
