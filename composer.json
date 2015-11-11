@@ -1,0 +1,43 @@
+{
+    "name": "jobsity/php-tick",
+    "description": "A PHP client for Tickspot API v2",
+    "type": "library",
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "Jose Torres",
+            "email": "jose.torres@jobsity.com"
+
+        },
+        {
+            "name": "Yudeikis Orta",
+            "email": "yudeikis.orta@jobsity.com"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.5.0",
+        "guzzlehttp/guzzle": "^6.0"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "^4.6.0"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Jobsity\\PhpTick\\" : "src/",
+            "Jobsity\\PhpTick\\Test\\": "tests/"
+        }
+    },
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
