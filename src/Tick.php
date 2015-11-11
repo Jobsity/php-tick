@@ -1,8 +1,7 @@
 <?php
-
 namespace Jobsity\PhpTick\Api;
 
-use Jobsity\PhpTick\Api\Client\APIClient;
+use Jobsity\PhpTick\Http\APIClient;
 
 class TickspotAPI
 {
