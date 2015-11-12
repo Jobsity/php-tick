@@ -10,7 +10,7 @@ use mef\Log\StandardLogger;
 /**
  * Class ApiClient
  *
- * @package Jobsity\PhpTick
+ * @package Jobsity\PhpTick\Http
  */
 class ApiClient implements ClientInterface
 {
@@ -18,7 +18,7 @@ class ApiClient implements ClientInterface
     const ENDPOINT_URL = '/api/v2/';
 
     /**
-     * @var string User’s subscription id
+     * @var string User's subscription id
      */
     private $subscriptionId;
 
@@ -38,7 +38,7 @@ class ApiClient implements ClientInterface
     private $email;
 
     /**
-    * @var string API url
+    * @var string API URL
     */
     private $apiUrl;
 
@@ -48,7 +48,7 @@ class ApiClient implements ClientInterface
     private $client;
 
     /**
-     * Constructor
+     * Constructs ApiClient
      *
      * @param string   $subscriptionId   Subscription id of the user.
      * @param string   $accessToken      Access token of the user.
