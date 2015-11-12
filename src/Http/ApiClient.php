@@ -80,8 +80,7 @@ class ApiClient implements ClientInterface
     public function get($endpoint, array $queryParams)
     {
         try {
-            $request = $this->client->request('GET', $this->apiUrl . $endpoint . '.json',
-                array('query' => $queryParams));
+            $request = $this->client->request('GET', $this->apiUrl . $endpoint . '.json', ['query' => $queryParams]);
 
             return json_decode((string)$request->getBody());
         } catch (ClientException $e) {
@@ -90,11 +89,13 @@ class ApiClient implements ClientInterface
                 'message' => $e->getResponse()->getReasonPhrase()
             ]);
         } catch (ServerException $e) {
-            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+            return $this->logger->error('{code} : {message}', [
+                'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                return $this->logger->error('{code} : {message}', [
+                    'code' => $e->getResponse()->getStatusCode(),
                     'message' => $e->getMessage()]);
             } else
                 return $this->logger->error($e->getMessage());
@@ -109,23 +110,24 @@ class ApiClient implements ClientInterface
     public function post($endpoint, array $data)
     {
         try {
-            $request = $this->client->request('POST', $this->apiUrl . $endpoint . '.json',
-                array('headers' => array(
-                    'Content-Type' => 'application/json; charset=utf-8'
-                ),
-                    'json' => $data
-                ));
+            $request = $this->client->request('POST', $this->apiUrl . $endpoint . '.json', [
+                'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+                'json' => $data
+            ]);
 
             return (string)$request->getBody();
         } catch (ClientException $e) {
-            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+            return $this->logger->error('{code} : {message}', [
+                'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
         } catch (ServerException $e) {
-            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+            return $this->logger->error('{code} : {message}', [
+                'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                return $this->logger->error('{code} : {message}', [
+                    'code' => $e->getResponse()->getStatusCode(),
                     'message' => $e->getMessage()]);
             } else
                 return $this->logger->error($e->getMessage());
@@ -140,23 +142,24 @@ class ApiClient implements ClientInterface
     public function put($endpoint, array $data)
     {
         try {
-            $request = $this->client->request('PUT', $this->apiUrl . $endpoint . '.json',
-                array('headers' => array(
-                    'Content-Type' => 'application/json; charset=utf-8'
-                ),
-                    'json' => $data
-                ));
+            $request = $this->client->request('PUT', $this->apiUrl . $endpoint . '.json', [
+                'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+                'json' => $data
+            ]);
 
             return $request->getStatusCode();
         } catch (ClientException $e) {
-            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+            return $this->logger->error('{code} : {message}', [
+                'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
         } catch (ServerException $e) {
-            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+            return $this->logger->error('{code} : {message}', [
+                'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                return $this->logger->error('{code} : {message}', [
+                    'code' => $e->getResponse()->getStatusCode(),
                     'message' => $e->getMessage()]);
             } else
                 return $this->logger->error($e->getMessage());
@@ -175,14 +178,17 @@ class ApiClient implements ClientInterface
 
             return $request->getStatusCode();
         } catch (ClientException $e) {
-            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+            return $this->logger->error('{code} : {message}', [
+                'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
         } catch (ServerException $e) {
-            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+            return $this->logger->error('{code} : {message}', [
+                'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                return $this->logger->error('{code} : {message}', [
+                    'code' => $e->getResponse()->getStatusCode(),
                     'message' => $e->getMessage()]);
             } else
                 return $this->logger->error($e->getMessage());
