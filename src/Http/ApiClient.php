@@ -64,9 +64,11 @@ class ApiClient implements ClientInterface
 
         $this->apiUrl = self::BASE_URL . $this->subscriptionId . self::ENDPOINT_URL;
 
-        $this->client = new Client(['headers' =>
-            ['User-Agent' => $this->company . "(" . $this->email . ")",
-                'Authorization' => "Token token=" . $this->accessToken]
+        $this->client = new Client([
+            'headers' => [
+                'User-Agent' => $this->company . '(' . $this->email . ')',
+                'Authorization' => 'Token token=' . $this->accessToken
+            ]
         ]);
 
         $this->logger = new StandardLogger();
