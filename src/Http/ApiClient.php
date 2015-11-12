@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
 use mef\Log\StandardLogger;
+use Exception;
 
 /**
  * Class ApiClient
@@ -97,9 +98,10 @@ class ApiClient implements ClientInterface
                 return $this->logger->error('{code} : {message}', [
                     'code' => $e->getResponse()->getStatusCode(),
                     'message' => $e->getMessage()]);
-            } else
+            } else {
                 return $this->logger->error($e->getMessage());
-        } catch (\Exception $e) {
+            }
+        } catch (Exception $e) {
             return $this->logger->error($e->getMessage());
         }
     }
@@ -129,9 +131,10 @@ class ApiClient implements ClientInterface
                 return $this->logger->error('{code} : {message}', [
                     'code' => $e->getResponse()->getStatusCode(),
                     'message' => $e->getMessage()]);
-            } else
+            } else {
                 return $this->logger->error($e->getMessage());
-        } catch (\Exception $e) {
+            }
+        } catch (Exception $e) {
             return $this->logger->error($e->getMessage());
         }
     }
@@ -161,9 +164,10 @@ class ApiClient implements ClientInterface
                 return $this->logger->error('{code} : {message}', [
                     'code' => $e->getResponse()->getStatusCode(),
                     'message' => $e->getMessage()]);
-            } else
+            } else {
                 return $this->logger->error($e->getMessage());
-        } catch (\Exception $e) {
+            }
+        } catch (Exception $e) {
             return $this->logger->error($e->getMessage());
         }
     }
@@ -174,7 +178,7 @@ class ApiClient implements ClientInterface
     public function delete($endpoint)
     {
         try {
-            $request = $this->client->request('DELETE', $this->apiUrl . $endpoint . '.json', array());
+            $request = $this->client->request('DELETE', $this->apiUrl . $endpoint . '.json', []);
 
             return $request->getStatusCode();
         } catch (ClientException $e) {
@@ -190,9 +194,10 @@ class ApiClient implements ClientInterface
                 return $this->logger->error('{code} : {message}', [
                     'code' => $e->getResponse()->getStatusCode(),
                     'message' => $e->getMessage()]);
-            } else
+            } else {
                 return $this->logger->error($e->getMessage());
-        } catch (\Exception $e) {
+            }
+        } catch (Exception $e) {
             return $this->logger->error($e->getMessage());
         }
     }
