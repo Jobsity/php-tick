@@ -4,7 +4,7 @@ namespace Jobsity\PhpTick\Http;
 /**
  * Interface ClientInterface
  *
- * @package Jobsity\PhpTick\Api\Client
+ * @package Jobsity\PhpTick\Http
  */
 interface ClientInterface
 {
