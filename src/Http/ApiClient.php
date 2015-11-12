@@ -106,7 +106,7 @@ class ApiClient implements ClientInterface
         try {
             $request = $this->client->request('GET', $this->apiUrl . $endpoint . '.json', ['query' => $queryParams]);
 
-            return json_decode((string)$request->getBody());
+            return json_decode((string)$request->getBody(), true);
         } catch (ClientException $e) {
             return $e->getResponse()->getStatusCode();
         } catch (ServerException $e) {
