@@ -7,6 +7,7 @@ use GuzzleHttp\ClientInterface as GuzzleClienInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
+use Jobsity\PhpTick\Http\Exception\ApiException;
 use mef\Log\Logger;
 use mef\Log\StandardLogger;
 
@@ -104,11 +105,11 @@ class ApiClient implements ClientInterface
     public function get($endpoint, array $queryParams)
     {
         try {
-            $request = $this->client->request('GET', $this->apiUrl . $endpoint . '.json', ['query' => $queryParams]);
+            $response = $this->client->request('GET', $this->apiUrl . $endpoint . '.json', ['query' => $queryParams]);
 
-            return json_decode((string)$request->getBody(), true);
+            return json_decode((string)$response->getBody(), true);
         } catch (ClientException $e) {
-            return $e->getResponse()->getStatusCode();
+            throw new ApiException($e->getResponse());
         } catch (ServerException $e) {
             return $e->getResponse()->getStatusCode();
         } catch (RequestException $e) {
