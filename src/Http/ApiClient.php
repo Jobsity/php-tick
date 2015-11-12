@@ -1,12 +1,14 @@
 <?php
 namespace Jobsity\PhpTick\Http;
 
+use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface as GuzzleClienInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
+use mef\Log\Logger;
 use mef\Log\StandardLogger;
-use Exception;
 
 /**
  * Class ApiClient
@@ -49,14 +51,40 @@ class ApiClient implements ClientInterface
     private $client;
 
     /**
-     * Constructs ApiClient
+     * Return an instance of the class.
      *
      * @param string   $subscriptionId   Subscription id of the user.
      * @param string   $accessToken      Access token of the user.
      * @param string   $company          User's company.
      * @param string   $email            User's email.
+     *
+     * @return Jobsity\PhpTick\Http\ApiClient Created instance of the class.
      */
-    public function __construct($subscriptionId, $accessToken, $company, $email)
+    public function getInstance($subscriptionId, $accessToken, $company, $email)
+    {
+        $client = new Client([
+            'headers' => [
+                'User-Agent' => $this->company . '(' . $this->email . ')',
+                'Authorization' => 'Token token=' . $this->accessToken
+            ]
+        ]);
+
+        $logger =  new StandardLogger();
+
+        return new self($client, $logger, $subscriptionId, $accessToken, $company, $email);
+    }
+
+    /**
+     * Constructs ApiClient
+     *
+     * @param GuzzleHttp\ClientInterface   $client           Guzzler client.
+     * @param mef\Log\Logger               $logger           Logger instance.
+     * @param string                       $subscriptionId   Subscription id of the user.
+     * @param string                       $accessToken      Access token of the user.
+     * @param string                       $company          User's company.
+     * @param string                       $email            User's email.
+     */
+    public function __construct(GuzzleClienInterface $client, Logger $logger, $subscriptionId, $accessToken, $company, $email)
     {
         $this->subscriptionId = (string)$subscriptionId;
         $this->accessToken = (string)$accessToken;
@@ -65,14 +93,9 @@ class ApiClient implements ClientInterface
 
         $this->apiUrl = self::BASE_URL . $this->subscriptionId . self::ENDPOINT_URL;
 
-        $this->client = new Client([
-            'headers' => [
-                'User-Agent' => $this->company . '(' . $this->email . ')',
-                'Authorization' => 'Token token=' . $this->accessToken
-            ]
-        ]);
+        $this->client = $client;
 
-        $this->logger = new StandardLogger();
+        $this->logger = $logger;
     }
 
     /**
