@@ -12,7 +12,7 @@ interface ClientInterface
      * Get Request
      *
      * @param string    $endpoint      Final endpoint
-     * @param array     $queryParams   Parameters for quering
+     * @param array     $queryParams   Parameters for querying
      *
      * @return mixed
      */
