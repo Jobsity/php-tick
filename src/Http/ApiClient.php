@@ -85,8 +85,10 @@ class ApiClient implements ClientInterface
 
             return json_decode((string)$request->getBody());
         } catch (ClientException $e) {
-            return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
-                'message' => $e->getResponse()->getReasonPhrase()]);
+            return $this->logger->error('{code} : {message}', [
+                'code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()
+            ]);
         } catch (ServerException $e) {
             return $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
