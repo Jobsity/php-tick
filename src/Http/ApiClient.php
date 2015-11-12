@@ -60,7 +60,7 @@ class ApiClient implements ClientInterface
      *
      * @return Jobsity\PhpTick\Http\ApiClient Created instance of the class.
      */
-    public function getInstance($subscriptionId, $accessToken, $company, $email)
+    public static function getInstance($subscriptionId, $accessToken, $company, $email)
     {
         $client = new Client([
             'headers' => [
