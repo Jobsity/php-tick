@@ -1,0 +1,19 @@
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.5/phpunit.xsd"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    forceCoversAnnotation="true"
+    stopOnError="true"
+    stopOnFailure="true"
+    beStrictAboutTestsThatDoNotTestAnything="true"
+    checkForUnintentionallyCoveredCode="true"
+>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+</phpunit>
