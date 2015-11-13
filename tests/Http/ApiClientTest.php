@@ -134,9 +134,27 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRequestFailure()
     {
-        $apiClient = $this->getClientApi([
-            new RequestException("Something went wrong",
-            new Request('GET', 'endpoint'))]);
+        $apiClient = $this->getClientApi([ new RequestException("Something went wrong", new Request('GET', 'endpoint'),
+            new Response(500, [], null, null, 'Something went wrong') )]);
+
+        try {
+            $response = $apiClient->get('endpoint', []);
+        } catch (ApiException $e) {
+            $this->assertEquals(500, $e->getErrorCode());
+            $this->assertEquals('something went wrong', strtolower($e->getErrorMessage()));
+        }
+    }
+
+    /**
+     * @covers ::get
+     *
+     * @uses Jobsity\PhpTick\Http\ApiClient::__construct
+     * @uses Jobsity\PhpTick\Http\Exception\ApiException
+     *
+     */
+    public function testGetRequestGeneralFailure()
+    {
+        $apiClient = $this->getClientApi([new RequestException("Something went wrong", new Request('GET', 'endpoint'))]);
 
         try {
             $response = $apiClient->get('endpoint', []);
@@ -218,9 +236,26 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
      */
     public function testPostRequestFailure()
     {
-        $apiClient = $this->getClientApi([
-            new RequestException("Something went wrong",
-            new Request('POST', 'endpoint'))]);
+        $apiClient = $this->getClientApi([ new RequestException("Something went wrong", new Request('POST', 'endpoint'),
+            new Response(500, [], null, null, 'something went wrong'))]);
+
+        try {
+            $response = $apiClient->post('endpoint', []);
+        } catch (ApiException $e) {
+            $this->assertEquals(500, $e->getErrorCode());
+            $this->assertEquals('something went wrong', strtolower($e->getErrorMessage()));
+        }
+    }
+
+    /**
+     * @covers ::post
+     *
+     * @uses Jobsity\PhpTick\Http\ApiClient::__construct
+     *
+     */
+    public function testPostRequestGeneralFailure()
+    {
+        $apiClient = $this->getClientApi([new RequestException("Something went wrong", new Request('POST', 'endpoint'))]);
 
         try {
             $response = $apiClient->post('endpoint', []);
@@ -297,15 +332,33 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
      */
     public function testPutRequestFailure()
     {
-        $apiClient = $this->getClientApi([
-            new RequestException("Something went wrong",
-            new Request('PUT', 'endpoint'))]);
+        $apiClient = $this->getClientApi([ new RequestException("Something went wrong", new Request('PUT', 'endpoint'),
+            new Response(500, [], null, null, 'something went wrong'))]);
+
+        try {
+            $response = $apiClient->put('endpoint', []);
+        } catch (ApiException $e) {
+            $this->assertEquals(500, $e->getErrorCode());
+            $this->assertEquals('something went wrong', strtolower($e->getErrorMessage()));
+        }
+    }
+
+    /**
+     * @covers ::put
+     *
+     * @uses Jobsity\PhpTick\Http\ApiClient::__construct
+     * @uses Jobsity\PhpTick\Http\Exception\ApiException
+     *
+     */
+    public function testPutRequestGeneralFailure()
+    {
+        $apiClient = $this->getClientApi([new RequestException("Something went wrong", new Request('PUT', 'endpoint'))]);
 
         try {
             $response = $apiClient->put('endpoint', []);
         } catch (Exception $e) {
             $this->assertEquals('something went wrong', strtolower($e->getMessage()));
-    }
+        }
     }
 
     /**
@@ -371,9 +424,27 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
      */
     public function testDeleteRequestFailure()
     {
-        $apiClient = $this->getClientApi([
-            new RequestException("Something went wrong",
-            new Request('DELETE', 'endpoint'))]);
+        $apiClient = $this->getClientApi([ new RequestException("Something went wrong", new Request('PUT', 'endpoint'),
+            new Response(500, [], null, null, 'something went wrong'))]);
+
+        try {
+            $response = $apiClient->delete('endpoint');
+        } catch (ApiException $e) {
+            $this->assertEquals(500, $e->getErrorCode());
+            $this->assertEquals('something went wrong', strtolower($e->getErrorMessage()));
+        }
+    }
+
+    /**
+     * @covers ::delete
+     *
+     * @uses Jobsity\PhpTick\Http\ApiClient::__construct
+     * @uses Jobsity\PhpTick\Http\Exception\ApiException
+     *
+     */
+    public function testDeleteRequestGeneralFailure()
+    {
+        $apiClient = $this->getClientApi([new RequestException("Something went wrong", new Request('DELETE', 'endpoint'))]);
 
         try {
             $response = $apiClient->delete('endpoint', []);
