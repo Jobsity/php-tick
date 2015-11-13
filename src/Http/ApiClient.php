@@ -102,7 +102,7 @@ class ApiClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function get($endpoint, array $queryParams = [])
+    public function get($endpoint, array $queryParams)
     {
         try {
             $response = $this->client->request('GET', $this->apiUrl . $endpoint . '.json', ['query' => $queryParams]);
