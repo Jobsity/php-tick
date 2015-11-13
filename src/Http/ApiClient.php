@@ -59,7 +59,7 @@ class ApiClient implements ClientInterface
      * @param string   $company          User's company.
      * @param string   $email            User's email.
      *
-     * @return Jobsity\PhpTick\Http\ApiClient Created instance of the class.
+     * @return \Jobsity\PhpTick\Http\ApiClient Created instance of the class.
      */
     public static function getInstance($subscriptionId, $accessToken, $company, $email)
     {
@@ -78,8 +78,8 @@ class ApiClient implements ClientInterface
     /**
      * Constructs ApiClient
      *
-     * @param GuzzleHttp\ClientInterface   $client           Guzzler client.
-     * @param mef\Log\Logger               $logger           Logger instance.
+     * @param \GuzzleHttp\ClientInterface   $client           Guzzler client.
+     * @param \mef\Log\Logger               $logger           Logger instance.
      * @param string                       $subscriptionId   Subscription id of the user.
      * @param string                       $accessToken      Access token of the user.
      * @param string                       $company          User's company.
@@ -109,17 +109,22 @@ class ApiClient implements ClientInterface
 
             return json_decode((string)$response->getBody(), true);
         } catch (ClientException $e) {
+            $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
             throw new ApiException($e->getResponse());
         } catch (ServerException $e) {
-            return $e->getResponse()->getStatusCode();
+            $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+            throw new ApiException($e->getResponse());
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                return $e->getResponse()->getStatusCode();
+                $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                    'message' => $e->getMessage()]);
+                throw new ApiException($e->getResponse());
             } else {
-                return $e->getCode();
+                $this->logger->error($e->getMessage());
+                throw new Exception('Something went wrong');
             }
-        } catch (Exception $e) {
-            return $e->getCode();
         }
     }
 
@@ -129,24 +134,29 @@ class ApiClient implements ClientInterface
     public function post($endpoint, array $data)
     {
         try {
-            $request = $this->client->request('POST', $this->apiUrl . $endpoint . '.json', [
+            $response = $this->client->request('POST', $this->apiUrl . $endpoint . '.json', [
                 'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
                 'json' => $data
             ]);
 
-            return json_decode((string) $request->getBody());
+            return json_decode((string) $response->getBody(), true);
         } catch (ClientException $e) {
-            return $e->getResponse()->getStatusCode();
+            $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+            throw new ApiException($e->getResponse());
         } catch (ServerException $e) {
-            return $e->getResponse()->getStatusCode();
+            $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+            throw new ApiException($e->getResponse());
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                return $e->getResponse()->getStatusCode();
+                $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                    'message' => $e->getMessage()]);
+                throw new ApiException($e->getResponse());
             } else {
-                return $e->getCode();
+                $this->logger->error($e->getMessage());
+                throw new Exception('Something went wrong');
             }
-        } catch (Exception $e) {
-            return $e->getCode();
         }
     }
 
@@ -156,24 +166,29 @@ class ApiClient implements ClientInterface
     public function put($endpoint, array $data)
     {
         try {
-            $request = $this->client->request('PUT', $this->apiUrl . $endpoint . '.json', [
+            $response = $this->client->request('PUT', $this->apiUrl . $endpoint . '.json', [
                 'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
                 'json' => $data
             ]);
 
-            return $request->getStatusCode();
+            return $response;
         } catch (ClientException $e) {
-            return $e->getResponse()->getStatusCode();
+            $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+            throw new ApiException($e->getResponse());
         } catch (ServerException $e) {
-            return $e->getResponse()->getStatusCode();
+            $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+            throw new ApiException($e->getResponse());
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                return $e->getResponse()->getStatusCode();
+                $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                    'message' => $e->getMessage()]);
+                throw new ApiException($e->getResponse());
             } else {
-                return $e->getCode();
+                $this->logger->error($e->getMessage());
+                throw new Exception('Something went wrong');
             }
-        } catch (Exception $e) {
-            return $e->getCode();
         }
     }
 
@@ -183,21 +198,26 @@ class ApiClient implements ClientInterface
     public function delete($endpoint)
     {
         try {
-            $request = $this->client->request('DELETE', $this->apiUrl . $endpoint . '.json', []);
+            $response = $this->client->request('DELETE', $this->apiUrl . $endpoint . '.json', []);
 
-            return $request->getStatusCode();
+            return $response;
         } catch (ClientException $e) {
-            return $e->getResponse()->getStatusCode();
+            $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+            throw new ApiException($e->getResponse());
         } catch (ServerException $e) {
-            return $e->getResponse()->getStatusCode();
+            $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                'message' => $e->getResponse()->getReasonPhrase()]);
+            throw new ApiException($e->getResponse());
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                return $e->getResponse()->getStatusCode();
+                $this->logger->error('{code} : {message}', ['code' => $e->getResponse()->getStatusCode(),
+                    'message' => $e->getMessage()]);
+                throw new ApiException($e->getResponse());
             } else {
-                return $e->getCode();
+                $this->logger->error($e->getMessage());
+                throw new Exception('Something went wrong');
             }
-        } catch (Exception $e) {
-            return $e->getCode();
         }
     }
 }
