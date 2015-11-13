@@ -1,60 +1,78 @@
 <?php
 namespace Jobsity\PhpTick;
 
-use Jobsity\PhpTick\Http\ApiClient;
-use Jobsity\PhpTick\Http\ClientInterface;
-use Jobsity\PhpTick\Tick\Entry;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
+use Jobsity\PhpTick\Http\APIClient;
 
-/**
- * Class Tick
- *
- * @package Jobsity\PhpTick
- */
 class Tick
 {
-    /**
-     * @var ApiClient   Guzzle Api Client Handler
-     */
     private $client;
 
     /**
-     * @var Entry       Entry Handler
+     * Default constructor.
      */
-    public $entry;
-
-    /**
-     * Return an instance of the class.
-     *
-     * @param string   $subscriptionId   Subscription id of the user.
-     * @param string   $accessToken      Access token of the user.
-     * @param string   $company          User's company.
-     * @param string   $email            User's email.
-     *
-     * @throw InvalidArgumentException
-     *
-     * @return Tick    Created instance of the class.
-     */
-    public static function getInstance($subscriptionId, $accessToken, $company, $email)
+    public function __construct($subscription_id, $access_token, $company, $email)
     {
-        if (!$subscriptionId || !$accessToken || !$company || !$email) {
-            throw new InvalidArgumentException('You must specify a company, email address, access token and subscription id.');
+        // store parameters
+        if (!$subscription_id || !$access_token || !$company || !$email) {
+            throw new \Exception('You must specify a company, email address, access token and subscrption id.');
         }
 
-        $client = ApiClient::getInstance($subscriptionId, $accessToken, $company, $email);
-
-        return new self($client);
+        $this->client = new APIClient($subscription_id, $access_token, $company, $email);
     }
 
-    /**
-     * Constructs Tick.
-     *
-     * @param ClientInterface $client   Guzzler client.
-     */
-    public function __construct(ClientInterface $client)
-    {
-        $this->client = $client;
 
-        $this->entry = new Entry($this->client);
+
+    public function getEntries($updated_at = NULL, $start_date = NULL, $end_date = NULL,
+                               $entry_billable = NULL, $project_id = NULL, $task_id = NULL,
+                               $user_id = NULL, $billed = NULL)
+    {
+
+        if ($updated_at === NULL && ($start_date === NULL || $end_date === NULL)) {
+            throw new \Exception('You must provide either updated_at or a combination of start_date and end_date.');
+        }
+
+        $query = array(
+            'entry_billable' => $entry_billable,
+            'project_id' => $project_id,
+            'task_id' => $task_id,
+            'user_id' => $user_id,
+            'billed' => $billed
+        );
+
+        // determine which required params to add
+        if ($updated_at !== NULL) {
+            $query['updated_at'] = $updated_at;
+        } else {
+            $query['start_date'] = $start_date;
+            $query['end_date'] = $end_date;
+        }
+
+        $this->client->get('entries', $query);
+    }
+
+     public function createEntry($task_id = '2101774', $hours = '6', $date='2015-11-11' , $notes = 'some test', $user_id = null)
+     {
+        $params = [
+            'date' => $date,
+            'hours' => $hours,
+            'task_id' => $task_id,
+            'notes' => $notes,
+            'user_id' => $user_id
+        ];
+
+        $this->client->post('entries', $params);
+    }
+
+    public function updateEntry(){
+        $query = array(
+            'hours' => '2',
+            'notes' => 'some test v2'
+        );
+
+        $this->client->put('entries/48894668', $query);
+    }
+
+    public function deleteEntry(){
+        $this->client->delete('entries/48894447');
     }
 }
