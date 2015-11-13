@@ -8,11 +8,18 @@
         {
             "name": "Jose Torres",
             "email": "jose.torres@jobsity.com"
+
+        },
+        {
+            "name": "Yudeikis Orta",
+            "email": "yudeikis.orta@jobsity.com"
         }
     ],
 
     "require": {
-        "php": ">=5.5.0"
+        "php": ">=5.5.0",
+        "guzzlehttp/guzzle": "^6.0",
+        "mefworks/log": "^1.0"
     },
 
     "require-dev": {
@@ -22,7 +29,7 @@
     "autoload": {
         "psr-4": {
             "Jobsity\\PhpTick\\" : "src/",
-            "Jobsity\\PhpTick\\Test": "tests/"
+            "Jobsity\\PhpTick\\Test\\": "tests/"
         }
     },
 
