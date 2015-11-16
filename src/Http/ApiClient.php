@@ -102,7 +102,7 @@ class ApiClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function get($endpoint, array $queryParams)
+    public function get($endpoint, array $queryParams = [])
     {
         try {
             $response = $this->client->request('GET', $this->apiUrl . $endpoint . '.json', ['query' => $queryParams]);
@@ -195,7 +195,7 @@ class ApiClient implements ClientInterface
                 'json' => $data
             ]);
 
-            return $response;
+            return json_decode((string)$response->getBody(), true);
         } catch (ClientException $e) {
             $this->logger->error('Error trying to request PUT: {endpoint} {data}, server return: {code} : {message}', [
                 'endpoint' => $endpoint,
