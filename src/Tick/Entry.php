@@ -1,8 +1,8 @@
 <?php
 namespace Jobsity\PhpTick\Tick;
 
-use Jobsity\PhpTick\Http\ClientInterface;
 use InvalidArgumentException;
+use Jobsity\PhpTick\Http\ClientInterface;
 
 /**
  * Class Entry
