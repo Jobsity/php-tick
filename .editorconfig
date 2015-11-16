@@ -1,0 +1,22 @@
+# http://editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+# All PHP files MUST use the Unix LF (linefeed) line ending.
+[*]
+charset = utf-8
+end_of_line = lf
+
+# All PHP files MUST end with a single blank line.
+insert_final_newline = true
+
+# There MUST NOT be trailing whitespace at the end of non-blank lines.
+trim_trailing_whitespace = true
+
+# Code MUST use an indent of 4 spaces, and MUST NOT use tabs for indenting.
+indent_style = space
+indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = false
