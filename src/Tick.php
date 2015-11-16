@@ -4,7 +4,10 @@ namespace Jobsity\PhpTick;
 use Jobsity\PhpTick\Http\ApiClient;
 use Jobsity\PhpTick\Http\ClientInterface;
 use Jobsity\PhpTick\Tick\Entry;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
+use InvalidArgumentException;
+use Jobsity\PhpTick\Tick\Project;
+use Jobsity\PhpTick\Tick\Task;
+
 
 /**
  * Class Tick
@@ -14,14 +17,18 @@ use SebastianBergmann\RecursionContext\InvalidArgumentException;
 class Tick
 {
     /**
-     * @var ApiClient   Guzzle Api Client Handler
+     * @var ApiClient Guzzle Api Client Handler
      */
     private $client;
 
     /**
-     * @var Entry       Entry Handler
+     * @var Entry Entry Handler
      */
     public $entry;
+
+    public $task;
+
+    public $project;
 
     /**
      * Return an instance of the class.
@@ -56,5 +63,7 @@ class Tick
         $this->client = $client;
 
         $this->entry = new Entry($this->client);
+        $this->task = new Task($this->client);
+        $this->project = new Project($this->client);
     }
 }
