@@ -3,7 +3,7 @@ namespace Jobsity\PhpTick\Tick;
 
 use Jobsity\PhpTick\Http\APIClient;
 use Jobsity\PhpTick\Http\ClientInterface;
-use Prophecy\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Class Entry
@@ -17,7 +17,6 @@ class Entry
      */
     private $client;
 
-
     /**
      * Constructs Entry
      *
@@ -29,7 +28,7 @@ class Entry
     }
 
     /**
-     * Get entries list filtered by the specified parameters
+     * Get entries list filtered by the specified parameters.
      *
      * @param string    $updatedAt      Modification date.
      * @param string    $startDate      Start date.
@@ -59,36 +58,40 @@ class Entry
             'user_id' => $userId
         ];
 
-        if ($updatedAt !== NULL) {
+        if ($updatedAt !== null) {
             $query['updated_at'] = $updatedAt;
         } else {
             $query['start_date'] = $startDate;
             $query['end_date'] = $endDate;
         }
 
-        $this->client->get('entries', $query);
+        return $this->client->get('entries', $query);
     }
 
     /**
+     * Get detail of one entry.
+     *
      * @param string    $entryId    Entry id.
+     *
+     * @return mixed
      */
     public function get($entryId)
     {
-        $this->client->get('entries/' . $entryId);
+        return $this->client->get('entries/' . $entryId);
     }
 
     /**
-     * Create entry
+     * Create entry.
      *
      * @param string    $taskId     Task id which the entry belongs.
      * @param string    $hours      Time in hours of the entry.
-     * @param string    $date       Date when entry is created.
+     * @param string    $date       Entry's date.
      * @param string    $notes      Notes of the entry.
      * @param string    $userId     User id who created the entry.
      *
      * @return mixed
      */
-    public function create($hours, $date, $notes, $taskId = null, $userId = null)
+    public function create($hours, $date, $notes, $taskId, $userId = null)
     {
         $params = [
             'date'  => $date,
@@ -97,29 +100,44 @@ class Entry
             'task_id' => $taskId,
             'user_id' => $userId
         ];
-        $this->client->post('entries', $params);
+
+        return $this->client->post('entries', $params);
     }
 
     /**
-     * Update entry
+     * Update entry.
      *
+     * @param string    $entryId    Entry id.
      * @param string    $hours      Time in hours of the entry.
      * @param string    $notes      Notes of the entry.
-     * @param string    $entryId    Entry id to be modified.
+     * @param string    $date       Entry's date.
+     *
+     * @throws InvalidArgumentException
      *
      * @return mixed
      */
-    public function update($hours, $notes, $entryId)
+    public function update($entryId, $hours = null, $notes = null, $date = null)
     {
-        $query = [
-            'hours' => $hours,
-            'notes' => $notes
-        ];
-        $this->client->put('entries/' . $entryId, $query);
+        if($hours === null && $notes === null && $date === null) {
+            throw new InvalidArgumentException('You must specify at least one attribute for update.');
+        }
+
+        $query = [];
+        if($hours) {
+            $query['hours'] = $hours;
+        }
+        if($notes) {
+            $query['notes'] = $notes;
+        }
+        if($date) {
+            $query['date'] = $date;
+        }
+
+        return $this->client->put('entries/' . $entryId, $query);
     }
 
     /**
-     * Delete entry
+     * Delete entry.
      *
      * @param string    $entryId    Entry id to be deleted.
      *
@@ -127,6 +145,6 @@ class Entry
      */
     public function delete($entryId)
     {
-        $this->client->delete('entries/' . $entryId);
+        return $this->client->delete('entries/' . $entryId);
     }
 }
