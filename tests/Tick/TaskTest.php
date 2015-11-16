@@ -1,15 +1,16 @@
 <?php
 namespace Jobsity\PhpTick\Test\Tick;
 
-use PHPUnit_Framework_TestCase;
-use InvalidArgumentException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use mef\Log\StandardLogger;
+use InvalidArgumentException;
 use Jobsity\PhpTick\Http\ApiClient;
+use Jobsity\PhpTick\Tick\Entry;
 use Jobsity\PhpTick\Tick\Task;
+use mef\Log\StandardLogger;
+use PHPUnit_Framework_TestCase;
 
 /**
  * Class TaskTest

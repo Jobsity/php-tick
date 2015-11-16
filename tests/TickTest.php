@@ -1,10 +1,10 @@
 <?php
 namespace Jobsity\PhpTick\Test;
 
+use InvalidArgumentException;
 use Jobsity\PhpTick\Http\ApiClient;
 use Jobsity\PhpTick\Tick;
 use PHPUnit_Framework_TestCase;
-use InvalidArgumentException;
 
 /**
  * Class TickTest
