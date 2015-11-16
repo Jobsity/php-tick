@@ -143,40 +143,45 @@ class ApiClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function post($endpoint, array $data)
+    public function post($endpoint, array $queryParams = [], array $data)
     {
         try {
             $response = $this->client->request('POST', $this->apiUrl . $endpoint . '.json', [
                 'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+                'query' => $queryParams,
                 'json' => $data
             ]);
 
             return json_decode((string) $response->getBody(), true);
         } catch (ClientException $e) {
-            $this->logger->error('Error trying to request POST: {endpoint} {data}, server return: {code} : {message}', [
+            $this->logger->error('Error trying to request POST: {endpoint} {queryParams} with data {data}, server return: {code} : {message}', [
                 'endpoint' => $endpoint,
+                'queryParams'=> $queryParams,
                 'data'=> $data,
                 'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
             throw new ApiException($e->getResponse());
         } catch (ServerException $e) {
-            $this->logger->error('Error trying to request POST: {endpoint} {data}, server return: {code} : {message}', [
+            $this->logger->error('Error trying to request POST: {endpoint} {queryParams} with data {data}, server return: {code} : {message}', [
                 'endpoint' => $endpoint,
+                'queryParams'=> $queryParams,
                 'data'=> $data,
                 'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
             throw new ApiException($e->getResponse());
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                $this->logger->error('Error trying to request POST: {endpoint} {data}, server return: {code} : {message}', [
+                $this->logger->error('Error trying to request POST: {endpoint} {queryParams} with data {data}, server return: {code} : {message}', [
                     'endpoint' => $endpoint,
+                    'queryParams'=> $queryParams,
                     'data'=> $data,
                     'code' => $e->getResponse()->getStatusCode(),
-                    'message' => $e->getMessage()]);
+                    'message' => $e->getResponse()->getReasonPhrase()]);
                 throw new ApiException($e->getResponse());
             } else {
-                $this->logger->error('Error trying to request POST: {endpoint} {data}, server return : {message}', [
+                $this->logger->error('Error trying to request POST: {endpoint} {queryParams} with data {data}, server return: {code} : {message}', [
                     'endpoint' => $endpoint,
+                    'queryParams'=> $queryParams,
                     'data'=> $data,
                     'message' => $e->getMessage()]);
                 throw new Exception('Something went wrong');
@@ -187,40 +192,45 @@ class ApiClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function put($endpoint, array $data)
+    public function put($endpoint, array $queryParams = [], array $data)
     {
         try {
             $response = $this->client->request('PUT', $this->apiUrl . $endpoint . '.json', [
                 'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+                'query' => $queryParams,
                 'json' => $data
             ]);
 
             return json_decode((string)$response->getBody(), true);
         } catch (ClientException $e) {
-            $this->logger->error('Error trying to request PUT: {endpoint} {data}, server return: {code} : {message}', [
+            $this->logger->error('Error trying to request PUT: {endpoint} {queryParams} with data {data}, server return: {code} : {message}', [
                 'endpoint' => $endpoint,
+                'queryParams'=> $queryParams,
                 'data'=> $data,
                 'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
             throw new ApiException($e->getResponse());
         } catch (ServerException $e) {
-            $this->logger->error('Error trying to request PUT: {endpoint} {data}, server return: {code} : {message}', [
+            $this->logger->error('Error trying to request PUT: {endpoint} {queryParams} with data {data}, server return: {code} : {message}', [
                 'endpoint' => $endpoint,
+                'queryParams'=> $queryParams,
                 'data'=> $data,
                 'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
             throw new ApiException($e->getResponse());
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                $this->logger->error('Error trying to request PUT: {endpoint} {data}, server return: {code} : {message}', [
+                $this->logger->error('Error trying to request PUT: {endpoint} {queryParams} with data {data}, server return: {code} : {message}', [
                     'endpoint' => $endpoint,
+                    'queryParams'=> $queryParams,
                     'data'=> $data,
                     'code' => $e->getResponse()->getStatusCode(),
-                    'message' => $e->getMessage()]);
+                    'message' => $e->getResponse()->getReasonPhrase()]);
                 throw new ApiException($e->getResponse());
             } else {
-                $this->logger->error('Error trying to request PUT: {endpoint} {data}, server return : {message}', [
+                $this->logger->error('Error trying to request PUT: {endpoint} {queryParams} with data {data}, server return: {code} : {message}', [
                     'endpoint' => $endpoint,
+                    'queryParams'=> $queryParams,
                     'data'=> $data,
                     'message' => $e->getMessage()]);
                 throw new Exception('Something went wrong');
@@ -231,34 +241,38 @@ class ApiClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
-    public function delete($endpoint)
+    public function delete($endpoint, array $queryParams = [])
     {
         try {
-            $response = $this->client->request('DELETE', $this->apiUrl . $endpoint . '.json', []);
+            $response = $this->client->request('DELETE', $this->apiUrl . $endpoint . '.json', ['query' => $queryParams]);
 
             return $response;
         } catch (ClientException $e) {
-            $this->logger->error('Error trying to request DELETE: {endpoint}, server return: {code} : {message}', [
+            $this->logger->error('Error trying to request DELETE: {endpoint} {queryParams}, server return: {code} : {message}', [
                 'endpoint' => $endpoint,
+                'queryParams'=> $queryParams,
                 'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
             throw new ApiException($e->getResponse());
         } catch (ServerException $e) {
-            $this->logger->error('Error trying to request DELETE: {endpoint}, server return: {code} : {message}', [
+            $this->logger->error('Error trying to request DELETE: {endpoint} {queryParams}, server return: {code} : {message}', [
                 'endpoint' => $endpoint,
+                'queryParams'=> $queryParams,
                 'code' => $e->getResponse()->getStatusCode(),
                 'message' => $e->getResponse()->getReasonPhrase()]);
             throw new ApiException($e->getResponse());
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
-                $this->logger->error('Error trying to request DELETE: {endpoint}, server return: {code} : {message}', [
+                $this->logger->error('Error trying to request DELETE: {endpoint} {queryParams}, server return: {code} : {message}', [
                     'endpoint' => $endpoint,
+                    'queryParams'=> $queryParams,
                     'code' => $e->getResponse()->getStatusCode(),
-                    'message' => $e->getMessage()]);
+                    'message' => $e->getResponse()->getReasonPhrase()]);
                 throw new ApiException($e->getResponse());
             } else {
-                $this->logger->error('Error trying to request DELETE: {endpoint}, server return : {message}', [
+                $this->logger->error('Error trying to request DELETE: {endpoint} {queryParams}, server return: {code} : {message}', [
                     'endpoint' => $endpoint,
+                    'queryParams'=> $queryParams,
                     'message' => $e->getMessage()]);
                 throw new Exception('Something went wrong');
             }
