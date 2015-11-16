@@ -159,7 +159,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         try {
             $response = $apiClient->get('endpoint', []);
         } catch (Exception $e) {
-            $this->assertEquals('something went wrong', strtolower($e->getMessage()));
+            $this->assertContains('something went wrong', strtolower($e->getMessage()));
         }
     }
 
@@ -260,7 +260,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         try {
             $response = $apiClient->post('endpoint', [], []);
         } catch (Exception $e) {
-            $this->assertEquals('something went wrong', strtolower($e->getMessage()));
+            $this->assertContains('something went wrong', strtolower($e->getMessage()));
         }
     }
 
@@ -359,7 +359,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         try {
             $response = $apiClient->put('endpoint', [], []);
         } catch (Exception $e) {
-            $this->assertEquals('something went wrong', strtolower($e->getMessage()));
+            $this->assertContains('something went wrong', strtolower($e->getMessage()));
         }
     }
 
@@ -454,7 +454,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
             $this->assertEquals(500, $e->getErrorCode());
             $this->assertEquals('internal server error', strtolower($e->getErrorMessage()));
         } catch (Exception $e) {
-            $this->assertEquals('something went wrong', strtolower($e->getMessage()));
+            $this->assertContains('something went wrong', strtolower($e->getMessage()));
         }
     }
 

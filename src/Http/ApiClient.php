@@ -135,7 +135,7 @@ class ApiClient implements ClientInterface
                     'endpoint' => $endpoint,
                     'queryParams'=> $queryParams,
                     'message' => $e->getMessage()]);
-                throw new Exception('Something went wrong');
+                throw new Exception('Something went wrong: ' . $e->getMessage());
             }
         }
     }
@@ -184,7 +184,7 @@ class ApiClient implements ClientInterface
                     'queryParams'=> $queryParams,
                     'data'=> $data,
                     'message' => $e->getMessage()]);
-                throw new Exception('Something went wrong');
+                throw new Exception('Something went wrong: ' . $e->getMessage());
             }
         }
     }
@@ -233,7 +233,7 @@ class ApiClient implements ClientInterface
                     'queryParams'=> $queryParams,
                     'data'=> $data,
                     'message' => $e->getMessage()]);
-                throw new Exception('Something went wrong');
+                throw new Exception('Something went wrong: ' . $e->getMessage());
             }
         }
     }
@@ -274,7 +274,7 @@ class ApiClient implements ClientInterface
                     'endpoint' => $endpoint,
                     'queryParams'=> $queryParams,
                     'message' => $e->getMessage()]);
-                throw new Exception('Something went wrong');
+                throw new Exception('Something went wrong: ' . $e->getMessage());
             }
         }
     }
