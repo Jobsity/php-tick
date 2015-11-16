@@ -124,18 +124,18 @@ class Entry
      */
     public function update($entryId, $hours = null, $notes = null, $date = null)
     {
-        if($hours === null && $notes === null && $date === null) {
+        if ($hours === null && $notes === null && $date === null) {
             throw new InvalidArgumentException('You must specify at least one attribute for update.');
         }
 
         $query = [];
-        if($hours) {
+        if ($hours) {
             $query['hours'] = $hours;
         }
-        if($notes) {
+        if ($notes) {
             $query['notes'] = $notes;
         }
-        if($date) {
+        if ($date) {
             $query['date'] = $date;
         }
 

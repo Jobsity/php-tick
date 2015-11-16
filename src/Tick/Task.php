@@ -84,19 +84,19 @@ class Task
      */
     public function update($taskId, $name = null, $budget = null, $billable = null)
     {
-        if($name === null && $billable === null && $budget === null) {
+        if ($name === null && $billable === null && $budget === null) {
             throw new InvalidArgumentException('You must specify at least one attribute for update.');
         }
 
         $params = [];
 
-        if($name) {
+        if ($name) {
             $params['name'] = $name;
         }
-        if($billable) {
+        if ($billable) {
             $params['billable'] = $billable;
         }
-        if($budget) {
+        if ($budget) {
             $params['budget'] = $budget;
         }
 

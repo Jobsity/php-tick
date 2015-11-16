@@ -105,7 +105,7 @@ class Project
     }
 
     /**
-     * Create project.
+     * Update project.
      *
      * @param string    $projectId          Project id.
      * @param string    $name               Project name.
@@ -130,31 +130,39 @@ class Project
         $billable = null,
         $recurring = null
     ) {
-        if(!$name && !$clientId && !$ownerId && !$budget && !$notifications && !$billable && !$recurring) {
+        if (
+            $name === null &&
+            $clientId === null &&
+            $ownerId === null &&
+            $budget === null &&
+            $notifications === null &&
+            $billable === null &&
+            $recurring === null
+        ) {
             throw new InvalidArgumentException('You must specify at least one attribute for update.');
         }
 
         $params = [];
 
-        if($name) {
+        if ($name) {
             $params['name'] = $name;
         }
-        if($clientId) {
+        if ($clientId) {
             $params['client_id'] = $clientId;
         }
-        if($ownerId) {
+        if ($ownerId) {
             $params['owner_id'] = $ownerId;
         }
-        if($budget) {
+        if ($budget) {
             $params['budget'] = $budget;
         }
-        if($notifications) {
+        if ($notifications) {
             $params['notifications'] = $notifications;
         }
-        if($billable) {
+        if ($billable) {
             $params['billable'] = $billable;
         }
-        if($recurring) {
+        if ($recurring) {
             $params['recurring'] = $recurring;
         }
 
