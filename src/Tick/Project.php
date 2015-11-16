@@ -101,7 +101,7 @@ class Project
             'recurring' => $recurring
         ];
 
-        return $this->client->post('projects/', $params);
+        return $this->client->post('projects/', [], $params);
     }
 
     /**
@@ -172,7 +172,7 @@ class Project
             $params['recurring'] = $recurring;
         }
 
-        return $this->client->put('tasks/' . $projectId, $params);
+        return $this->client->put('tasks/' . $projectId, [], $params);
     }
 
     /**
