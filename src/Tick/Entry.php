@@ -129,12 +129,15 @@ class Entry
         }
 
         $query = [];
+
         if ($hours) {
             $query['hours'] = $hours;
         }
+
         if ($notes) {
             $query['notes'] = $notes;
         }
+
         if ($date) {
             $query['date'] = $date;
         }

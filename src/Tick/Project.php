@@ -147,21 +147,27 @@ class Project
         if ($name) {
             $params['name'] = $name;
         }
+
         if ($clientId) {
             $params['client_id'] = $clientId;
         }
+
         if ($ownerId) {
             $params['owner_id'] = $ownerId;
         }
+
         if ($budget) {
             $params['budget'] = $budget;
         }
+
         if ($notifications) {
             $params['notifications'] = $notifications;
         }
+
         if ($billable) {
             $params['billable'] = $billable;
         }
+
         if ($recurring) {
             $params['recurring'] = $recurring;
         }

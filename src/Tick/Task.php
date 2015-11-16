@@ -93,9 +93,11 @@ class Task
         if ($name) {
             $params['name'] = $name;
         }
+
         if ($billable) {
             $params['billable'] = $billable;
         }
+
         if ($budget) {
             $params['budget'] = $budget;
         }
