@@ -1,13 +1,12 @@
 <?php
 namespace Jobsity\PhpTick;
 
+use InvalidArgumentException;
 use Jobsity\PhpTick\Http\ApiClient;
 use Jobsity\PhpTick\Http\ClientInterface;
 use Jobsity\PhpTick\Tick\Entry;
-use InvalidArgumentException;
 use Jobsity\PhpTick\Tick\Project;
 use Jobsity\PhpTick\Tick\Task;
-
 
 /**
  * Class Tick
