@@ -26,7 +26,7 @@ class EntryTest extends PHPUnit_Framework_TestCase
         $this->accessToken = '2387654321234578';
         $this->company = 'Company';
         $this->email = 'some@company.com';
-        $this->logger = new StandardLogger();
+        $this->logger = $this->getMock(StandardLogger::class);
     }
 
     /**
