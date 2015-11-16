@@ -181,7 +181,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
 
         $apiClient = $this->getClientApi([new Response(200, [], $data)]);
 
-        $response = $apiClient->post('endpoint', []);
+        $response = $apiClient->post('endpoint', [], []);
 
         $this->assertInternalType('array', $response);
         $this->assertCount(4, $response);
@@ -201,7 +201,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $apiClient = $this->getClientApi([ new Response(401) ]);
 
         try {
-            $response = $apiClient->post('endpoint', []);
+            $response = $apiClient->post('endpoint', [], []);
         } catch (ApiException $e) {
             $this->assertEquals(401, $e->getErrorCode());
             $this->assertEquals('unauthorized', strtolower($e->getErrorMessage()));
@@ -220,7 +220,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $apiClient = $this->getClientApi([ new Response(500) ]);
 
         try {
-            $response = $apiClient->post('endpoint', []);
+            $response = $apiClient->post('endpoint', [], []);
         } catch (ApiException $e) {
             $this->assertEquals(500, $e->getErrorCode());
             $this->assertEquals('internal server error', strtolower($e->getErrorMessage()));
@@ -240,7 +240,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
             new Response(500, [], null, null, 'something went wrong'))]);
 
         try {
-            $response = $apiClient->post('endpoint', []);
+            $response = $apiClient->post('endpoint', [], []);
         } catch (ApiException $e) {
             $this->assertEquals(500, $e->getErrorCode());
             $this->assertEquals('something went wrong', strtolower($e->getErrorMessage()));
@@ -258,7 +258,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $apiClient = $this->getClientApi([new RequestException("Something went wrong", new Request('POST', 'endpoint'))]);
 
         try {
-            $response = $apiClient->post('endpoint', []);
+            $response = $apiClient->post('endpoint', [], []);
         } catch (Exception $e) {
             $this->assertEquals('something went wrong', strtolower($e->getMessage()));
         }
@@ -279,7 +279,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
 
         $apiClient = $this->getClientApi([new Response(204, [], $data)]);
 
-        $response = $apiClient->put('endpoint', []);
+        $response = $apiClient->put('endpoint', [], []);
 
         $this->assertInternalType('array', $response);
         $this->assertCount(2, $response);
@@ -299,7 +299,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $apiClient = $this->getClientApi([ new Response(401) ]);
 
         try {
-            $response = $apiClient->put('endpoint', []);
+            $response = $apiClient->put('endpoint', [], []);
         } catch (ApiException $e) {
             $this->assertEquals(401, $e->getErrorCode());
             $this->assertEquals('unauthorized', strtolower($e->getErrorMessage()));
@@ -318,7 +318,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $apiClient = $this->getClientApi([ new Response(500) ]);
 
         try {
-            $response = $apiClient->put('endpoint', []);
+            $response = $apiClient->put('endpoint', [], []);
         } catch (ApiException $e) {
             $this->assertEquals(500, $e->getErrorCode());
             $this->assertEquals('internal server error', strtolower($e->getErrorMessage()));
@@ -338,7 +338,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
             new Response(500, [], null, null, 'something went wrong'))]);
 
         try {
-            $response = $apiClient->put('endpoint', []);
+            $response = $apiClient->put('endpoint', [], []);
         } catch (ApiException $e) {
             $this->assertEquals(500, $e->getErrorCode());
             $this->assertEquals('something went wrong', strtolower($e->getErrorMessage()));
@@ -357,7 +357,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
         $apiClient = $this->getClientApi([new RequestException("Something went wrong", new Request('PUT', 'endpoint'))]);
 
         try {
-            $response = $apiClient->put('endpoint', []);
+            $response = $apiClient->put('endpoint', [], []);
         } catch (Exception $e) {
             $this->assertEquals('something went wrong', strtolower($e->getMessage()));
         }
@@ -373,7 +373,7 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
     {
         $apiClient = $this->getClientApi([ new Response(204) ]);
 
-        $response = $apiClient->delete('endpoint', []);
+        $response = $apiClient->delete('endpoint');
 
         $this->assertEquals(204, $response->getStatusCode());
         $this->assertEquals('no content', strtolower($response->getReasonPhrase()));
