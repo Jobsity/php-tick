@@ -16,17 +16,23 @@ use Jobsity\PhpTick\Tick\Task;
 class Tick
 {
     /**
-     * @var ApiClient Guzzle Api Client Handler
+     * @var \Jobsity\PhpTick\Http\ApiClient Guzzle Api Client Handler
      */
     private $client;
 
     /**
-     * @var Entry Entry Handler
+     * @var \Jobsity\PhpTick\Tick\Entry Entry Handler
      */
     public $entry;
 
+    /**
+     * @var \Jobsity\PhpTick\Tick\Task Task Handler
+     */
     public $task;
 
+    /**
+     * @var \Jobsity\PhpTick\Tick\Project Project Handler
+     */
     public $project;
 
     /**
@@ -37,9 +43,9 @@ class Tick
      * @param string   $company          User's company.
      * @param string   $email            User's email.
      *
-     * @throw InvalidArgumentException
+     * @throws InvalidArgumentException  Throws exception if all parameters are missing
      *
-     * @return Tick    Created instance of the class.
+     * @return \Jobsity\PhpTick\Tick    Created instance of the class.
      */
     public static function getInstance($subscriptionId, $accessToken, $company, $email)
     {
@@ -55,7 +61,7 @@ class Tick
     /**
      * Constructs Tick.
      *
-     * @param ClientInterface $client   Guzzler client.
+     * @param \Jobsity\PhpTick\Http\ClientInterface $client   Guzzle client.
      */
     public function __construct(ClientInterface $client)
     {

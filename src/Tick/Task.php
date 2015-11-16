@@ -3,7 +3,6 @@ namespace Jobsity\PhpTick\Tick;
 
 use InvalidArgumentException;
 use Jobsity\PhpTick\Http\ClientInterface;
-use Jobsity\PhpTick\Http\ApiClient;
 
 /**
  * Class Task
@@ -13,14 +12,14 @@ use Jobsity\PhpTick\Http\ApiClient;
 class Task
 {
     /**
-     * @var ApiClient Guzzle Api Client Handler
+     * @var \Jobsity\PhpTick\Http\ApiClient Guzzle Api Client Handler
      */
     private $client;
 
     /**
      * Constructs Task.
      *
-     * @param ClientInterface   $client     Guzzle Api Client Handler.
+     * @param \Jobsity\PhpTick\Http\ClientInterface   $client     Guzzle Api Client Handler.
      */
     public function __construct(ClientInterface $client)
     {
@@ -79,7 +78,7 @@ class Task
      * @param string    $budget      Task's budget.
      * @param boolean   $billable    If it's billable.
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException     Throws exception if there isn't at least one parameter to update
      *
      * @return mixed
      */

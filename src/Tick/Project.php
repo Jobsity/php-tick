@@ -3,7 +3,6 @@ namespace Jobsity\PhpTick\Tick;
 
 use InvalidArgumentException;
 use Jobsity\PhpTick\Http\ClientInterface;
-use Jobsity\PhpTick\Http\ApiClient;
 
 /**
  * Class Project
@@ -13,14 +12,14 @@ use Jobsity\PhpTick\Http\ApiClient;
 class Project
 {
     /**
-     * @var ApiClient Guzzle Api Client Handler
+     * @var \Jobsity\PhpTick\Http\ApiClient Guzzle Api Client Handler
      */
     private $client;
 
     /**
      * Constructs Project.
      *
-     * @param ClientInterface   $client     Guzzle Api Client Handler.
+     * @param \Jobsity\PhpTick\Http\ClientInterface   $client     Guzzle Api Client Handler.
      */
     public function __construct(ClientInterface $client)
     {
@@ -83,9 +82,15 @@ class Project
      *
      * @return mixed
      */
-    public function create($name, $clientId, $ownerId, $budget = null, $notifications = true, $billable = true,
-                           $recurring = false)
-    {
+    public function create(
+        $name,
+        $clientId,
+        $ownerId,
+        $budget = null,
+        $notifications = true,
+        $billable = true,
+        $recurring = false
+    ) {
         $params = [
             'name'  => $name,
             'client_id' => $clientId,
@@ -111,13 +116,20 @@ class Project
      * @param boolean   $billable           If it's billable.
      * @param boolean   $recurring          If it's recurring.
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException     Throws exception if there isn't at least one parameter to update
      *
      * @return mixed
      */
-    public function update($projectId, $name = null, $clientId = null, $ownerId = null, $budget = null,
-                           $notifications = null, $billable = null, $recurring = null)
-    {
+    public function update(
+        $projectId,
+        $name = null,
+        $clientId = null,
+        $ownerId = null,
+        $budget = null,
+        $notifications = null,
+        $billable = null,
+        $recurring = null
+    ) {
         if(!$name && !$clientId && !$ownerId && !$budget && !$notifications && !$billable && !$recurring) {
             throw new InvalidArgumentException('You must specify at least one attribute for update.');
         }

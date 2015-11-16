@@ -1,7 +1,6 @@
 <?php
 namespace Jobsity\PhpTick\Tick;
 
-use Jobsity\PhpTick\Http\APIClient;
 use Jobsity\PhpTick\Http\ClientInterface;
 use InvalidArgumentException;
 
@@ -13,14 +12,14 @@ use InvalidArgumentException;
 class Entry
 {
     /**
-     * @var ApiClient Guzzle Api Client Handler
+     * @var \Jobsity\PhpTick\Http\ApiClient Guzzle Api Client Handler
      */
     private $client;
 
     /**
      * Constructs Entry
      *
-     * @param ClientInterface   $client     Guzzle Api Client Handler.
+     * @param \Jobsity\PhpTick\Http\ClientInterface   $client     Guzzle Api Client Handler.
      */
     public function __construct(ClientInterface $client)
     {
@@ -39,15 +38,22 @@ class Entry
      * @param string    $taskId         Task id which the entry belongs.
      * @param string    $userId         User id who created the entry.
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException Throws exception if parameters updateAt or both startDate and endDate are missing
      *
      * @return mixed
      */
-    public function getList($updatedAt = null, $startDate = null, $endDate = null, $billable = null,
-                            $projectId = null, $billed = null, $taskId = null, $userId = null)
-    {
+    public function getList(
+        $updatedAt = null,
+        $startDate = null,
+        $endDate = null,
+        $billable = null,
+        $projectId = null,
+        $billed = null,
+        $taskId = null,
+        $userId = null
+    ) {
         if ($updatedAt === null && ($startDate === null || $endDate === null)) {
-            throw new InvalidArgumentException('You must provide either updatedAt or a combination of startDate and endDate.');
+            throw new InvalidArgumentException('You must provide either updatedAt or both startDate and endDate.');
         }
 
         $query = [
@@ -112,7 +118,7 @@ class Entry
      * @param string    $notes      Notes of the entry.
      * @param string    $date       Entry's date.
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException     Throws exception if there isn't at least one parameter to update
      *
      * @return mixed
      */
