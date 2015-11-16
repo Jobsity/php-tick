@@ -51,6 +51,7 @@ class EntryTest extends PHPUnit_Framework_TestCase
      * @uses Jobsity\PhpTick\Http\ApiClient::getInstance
      * @uses Jobsity\PhpTick\Http\ApiClient::__construct
      * @uses Jobsity\PhpTick\Tick\Entry::__construct
+     * @uses Jobsity\PhpTick\Tick\Entry::create
      */
     public function testGetListSuccess()
     {
@@ -76,6 +77,7 @@ class EntryTest extends PHPUnit_Framework_TestCase
      * @uses Jobsity\PhpTick\Http\ApiClient::__construct
      * @uses Jobsity\PhpTick\Http\ApiClient::get
      * @uses Jobsity\PhpTick\Tick\Entry::__construct
+     * @uses Jobsity\PhpTick\Tick\Entry::create
      */
     public function testGetListPeriodSuccess()
     {
@@ -107,7 +109,7 @@ class EntryTest extends PHPUnit_Framework_TestCase
         try {
             $entryList = $this->entryHandler([ new Response(401) ])->getList();
         } catch (InvalidArgumentException $e) {
-            $this->assertEquals('you must provide either updatedat or a combination of startdate and enddate.',
+            $this->assertEquals('you must provide either updatedat or both startdate and enddate.',
                 strtolower($e->getMessage()));
         }
     }
@@ -119,6 +121,7 @@ class EntryTest extends PHPUnit_Framework_TestCase
      * @uses Jobsity\PhpTick\Http\ApiClient::__construct
      * @uses Jobsity\PhpTick\Http\ApiClient::get
      * @uses Jobsity\PhpTick\Tick\Entry::__construct
+     * @uses Jobsity\PhpTick\Tick\Entry::create
      */
     public function testGet()
     {
@@ -142,6 +145,7 @@ class EntryTest extends PHPUnit_Framework_TestCase
      * @uses Jobsity\PhpTick\Http\ApiClient::__construct
      * @uses Jobsity\PhpTick\Http\ApiClient::post
      * @uses Jobsity\PhpTick\Tick\Entry::__construct
+     * @uses Jobsity\PhpTick\Tick\Entry::delete
      */
     public function testCreate()
     {
@@ -240,5 +244,4 @@ class EntryTest extends PHPUnit_Framework_TestCase
 
         return $entry;
     }
-
 }

@@ -148,6 +148,7 @@ class ProjectTest extends PHPUnit_Framework_TestCase
      * @uses Jobsity\PhpTick\Http\ApiClient::__construct
      * @uses Jobsity\PhpTick\Http\ApiClient::post
      * @uses Jobsity\PhpTick\Tick\Project::__construct
+     * @uses Jobsity\PhpTick\Tick\Project::update
      */
     public function testCreate()
     {
@@ -250,5 +251,4 @@ class ProjectTest extends PHPUnit_Framework_TestCase
 
         return $project;
     }
-
 }
