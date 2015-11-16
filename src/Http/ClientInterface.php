@@ -26,7 +26,7 @@ interface ClientInterface
      *
      * @return mixed
      */
-    public function post($endpoint, array $data);
+    public function post($endpoint, array $queryParams, array $data);
 
     /**
      * Put Request
@@ -36,7 +36,7 @@ interface ClientInterface
      *
      * @return mixed
      */
-    public function put($endpoint, array $data);
+    public function put($endpoint, array $queryParams, array $data);
 
     /**
      * Delete Request
@@ -45,5 +45,5 @@ interface ClientInterface
      *
      * @return mixed
      */
-    public function delete($endpoint);
+    public function delete($endpoint, array $queryParams);
 }

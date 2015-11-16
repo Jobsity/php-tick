@@ -107,7 +107,7 @@ class Entry
             'user_id' => $userId
         ];
 
-        return $this->client->post('entries', $params);
+        return $this->client->post('entries', [], $params);
     }
 
     /**
@@ -142,7 +142,7 @@ class Entry
             $query['date'] = $date;
         }
 
-        return $this->client->put('entries/' . $entryId, $query);
+        return $this->client->put('entries/' . $entryId, [], $query);
     }
 
     /**
