@@ -106,7 +106,6 @@ class ApiClient implements ClientInterface
     {
         try {
             $response = $this->client->request('GET', $this->apiUrl . $endpoint . '.json', ['query' => $queryParams]);
-
             return json_decode((string)$response->getBody(), true);
         } catch (ClientException $e) {
             $this->logger->error('Error trying to request GET: {endpoint} {queryParams}, server return: {code} : {message}', [
@@ -150,7 +149,6 @@ class ApiClient implements ClientInterface
                 'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
                 'json' => $data
             ]);
-
             return json_decode((string) $response->getBody(), true);
         } catch (ClientException $e) {
             $this->logger->error('Error trying to request POST: {endpoint} {data}, server return: {code} : {message}', [
@@ -194,7 +192,6 @@ class ApiClient implements ClientInterface
                 'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
                 'json' => $data
             ]);
-            
             return json_decode((string)$response->getBody(), true);
         } catch (ClientException $e) {
             $this->logger->error('Error trying to request PUT: {endpoint} {data}, server return: {code} : {message}', [
@@ -235,7 +232,6 @@ class ApiClient implements ClientInterface
     {
         try {
             $response = $this->client->request('DELETE', $this->apiUrl . $endpoint . '.json', []);
-
             return $response;
         } catch (ClientException $e) {
             $this->logger->error('Error trying to request DELETE: {endpoint}, server return: {code} : {message}', [
