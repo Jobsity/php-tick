@@ -195,7 +195,7 @@ class ApiClient implements ClientInterface
                 'json' => $data
             ]);
 
-            return $response;
+            return json_decode((string)$response->getBody(), true);
         } catch (ClientException $e) {
             $this->logger->error('Error trying to request PUT: {endpoint} {data}, server return: {code} : {message}', [
                 'endpoint' => $endpoint,

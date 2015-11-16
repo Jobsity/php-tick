@@ -281,8 +281,10 @@ class ApiClientTest extends PHPUnit_Framework_TestCase
 
         $response = $apiClient->put('endpoint', []);
 
-        $this->assertEquals(204, $response->getStatusCode());
-        $this->assertEquals('no content', strtolower($response->getReasonPhrase()));
+        $this->assertInternalType('array', $response);
+        $this->assertCount(2, $response);
+        $this->assertArrayHasKey('hours', $response[0]);
+        $this->assertEquals('2', $response[0]['hours']);
     }
 
     /**
