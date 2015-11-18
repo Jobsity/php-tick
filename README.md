@@ -2,6 +2,11 @@
 
 A PHP client for Tickspot API. Currently supports v2 of the API.
 
+[![Latest Stable Version](https://poser.pugx.org/jobsity/php-tick/v/stable)](https://packagist.org/packages/jobsity/php-tick)
+[![Total Downloads](https://poser.pugx.org/jobsity/php-tick/downloads)](https://packagist.org/packages/jobsity/php-tick)
+[![Latest Unstable Version](https://poser.pugx.org/jobsity/php-tick/v/unstable)](https://packagist.org/packages/jobsity/php-tick)
+[![License](https://poser.pugx.org/jobsity/php-tick/license)](https://packagist.org/packages/jobsity/php-tick)
+
 ## Requirements
 * PHP `>= 5.5.0`
 * guzzlehttp/guzzle `^6.0`
