@@ -143,6 +143,22 @@ class ApiClient implements ClientInterface
     /**
      * {@inheritdoc}
      */
+    public function getAll($endpoint, array $queryParams = [])
+    {
+        $result = [];
+        $queryParams['page'] = 1;
+
+        while ($pageResult = $this->get($endpoint, $queryParams)) {
+            $result = array_merge($result, $pageResult);
+            $queryParams['page']++;
+        }
+
+        return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function post($endpoint, array $queryParams = [], array $data)
     {
         try {
