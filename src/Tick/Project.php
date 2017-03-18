@@ -70,6 +70,17 @@ class Project
     }
 
     /**
+     * Get tasks of a specific project.
+     *
+     * @param string    $projectId  Project Id.
+     * @return mixed
+     */
+    public function getTasks($projectId)
+    {
+        return $this->client->get('projects/' . $projectId . '/tasks');
+    }
+
+    /**
      * Create project.
      *
      * @param string    $name               Project name.
