@@ -67,7 +67,7 @@ class Task
             'billable' => $billable,
         ];
 
-        return $this->client->post('tasks/', [], $params);
+        return $this->client->post('tasks', [], $params);
     }
 
     /**
