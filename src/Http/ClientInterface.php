@@ -19,6 +19,16 @@ interface ClientInterface
     public function get($endpoint, array $queryParams);
 
     /**
+     * Get request for paginated results
+     *
+     * @param string    $endpoint      Final endpoint
+     * @param array     $queryParams   Parameters for querying
+     *
+     * @return mixed
+     */
+    public function getAll($endpoint, array $queryParams);
+
+    /**
      * Post Request
      *
      * @param string    $endpoint   Final endpoint
